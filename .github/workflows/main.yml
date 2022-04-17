@@ -35,10 +35,20 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
             #Now we have got the access of EC2 and we will start the deploy .
+            DIR="/home/ec2-user/server"
             pm2 delete all
-            cd /home/ec2-user &&
-            mkdir -p server &&
-            cd server
+            cd /home/ec2-user
+            
+            if [ ! -d $DIR ]
+            then
+              mkdir server &&
+              git clone https://github.com/CodePanthers/node-aws-ec2-github-actions.git server &&
+              cd server &&
+              npm i
+            else
+              cd server
+            fi
+            
             git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
