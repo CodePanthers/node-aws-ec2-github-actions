@@ -36,7 +36,7 @@ jobs:
           
             #Now we have got the access of EC2 and we will start the deploy .
             pm2 delete all
-            cd /home/ec2-user/Server &&
+            cd /home/ec2-user/server &&
             git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
