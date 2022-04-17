@@ -4,6 +4,7 @@
   "description": "Deploy a Node.js Express server to AWS EC2 machine using Github Actions",
   "main": "app.js",
   "scripts": {
+    "start" : "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
