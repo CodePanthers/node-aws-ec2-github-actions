@@ -26,7 +26,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Deploy in EC2
         env:
-            PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+            PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER  }}
             
