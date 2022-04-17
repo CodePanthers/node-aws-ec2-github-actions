@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Template for node-aws-ec2-github-actions tutorial
+Resources:
+  InstanceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: allow connections from specified source security group
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+  EC2Instance: 
+    Type: "AWS::EC2::Instance"
+    Properties: 
+      ImageId:  "ami-0d2986f2e8c0f7d01" # "ami-03ededff12e34e59e" us-east-1
+      InstanceType: t2.micro
+      KeyName: node-ec2-github-actions-key
+      SecurityGroups:
+      - Ref: InstanceSecurityGroup
+      BlockDeviceMappings:
+      - DeviceName: /dev/xvda
+        Ebs:
+          VolumeSize: 8
+          DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: Node-Ec2-Github-Actions
+  EIP:
+      Type: AWS::EC2::EIP
+      Properties:
+        InstanceId: !Ref EC2Instance
+Outputs:
+  InstanceId:
+    Description: InstanceId of the newly created EC2 instance
+    Value:
+      Ref: EC2Instance
+  PublicIP:
+    Description: Elastic IP 
+    Value:
+      Ref: EIP
